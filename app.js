@@ -1,7 +1,8 @@
 const express = require('express');
+const mongoose = require('mongoose');
 
 // Import Routes
-const courses = require('./Routes/courseRoute');
+const course = require("./Routes/courseRoute");
 const category = require("./Routes/categoryRoute");
 
 const app = express();
@@ -9,7 +10,15 @@ const app = express();
 // Middlewares
 app.use(express.json());
 app.use('/api/category', category);
-app.use('/api/course', courses);
+app.use('/api/course', course);
+
+// Connect to E-learning MongoDB
+mongoose.connect('mongodb://127.0.0.1:27017/e_learning')
+    .then(() => {
+        console.log("Succesfully connected to E-learning Database");
+    }).catch((err) => {
+        console.log("Error connecting to E-learning Database with error message:", err);
+    })
 
 // Create Home Page Route
 app.get('/', (req, res) => {

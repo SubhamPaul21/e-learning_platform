@@ -1,14 +1,6 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
 
-// Connect to Course MongoDB
-mongoose.connect('mongodb://127.0.0.1:27017/course')
-    .then(() => {
-        console.log("Succesfully connected to Course Database");
-    }).catch((err) => {
-        console.log("Error connecting to Course Database with error message:", err);
-    })
-
 // Generate Course Schema
 const courseSchema = {
     name: Joi.string().min(3).max(30).required().alphanum(),
