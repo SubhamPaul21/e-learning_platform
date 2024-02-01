@@ -1,4 +1,5 @@
 const express = require('express');
+const { displayCourses, displaySingleCourses } = require('./utils/display_courses');
 
 const app = express();
 
@@ -73,29 +74,25 @@ const courses = [
 
 // Create Course Route
 
-// Read Course Route
+// Read Courses Route
 app.get('/courses/', (req, res) => {
-    let displayCourses = "";
-    courses.forEach(course => {
-        let modules = "";
-        course.modules.forEach(module => {
-            modules += `<li>${module}</li>`
-        });
-        const display = `
-        <div style="border: 3px solid red; padding: 0px 0px 20px 20px; margin: 10px 0px">
-        <h2>${course.name}</h2>
-        <p>${course.description}</p>
-        <h3>Modules</h3>
-        <ol>${modules}</ol>
-        <span><b>Creator: </b>${course.creator}</span>
-        <br>
-        <span><b>Published Date: </b>${course.publishedDate}</span>
-        <br>
-        <span><b>Ratings: </b>${course.rating}</span>
-        </div>`
-        displayCourses += display;
-    })
-    res.send(displayCourses);
+    res.send(displayCourses(courses));
+})
+
+// Read Particular Course Route
+app.get('/courses/:name', (req, res) => {
+    const courseName = req.params.name.toLowerCase();
+    const course = courses.find(course => course.name.toLowerCase() === courseName);
+
+    if (!course) {
+        const notFoundMessage = `
+        <b>The course you are trying to find is not uploaded yet. Check the available courses here --></b>
+        <a href="/courses">Courses</a>
+        `
+        res.status(404).send(notFoundMessage);
+    } else {
+        res.send(displaySingleCourses(course));
+    }
 })
 
 // Update Course Route
