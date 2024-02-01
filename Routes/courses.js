@@ -2,10 +2,6 @@ const express = require('express');
 const { displayCourses, displaySingleCourses } = require('../utils/display_courses');
 
 const router = express.Router();
-const app = express();
-
-// Middleware to use JSON
-app.use(express.json());
 
 // Dummy course database for initial testing
 const courses = [

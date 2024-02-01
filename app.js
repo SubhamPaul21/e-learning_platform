@@ -3,7 +3,7 @@ const courses = require('./Routes/courses');
 
 const app = express();
 
-// Middle wares
+// Middlewares
 app.use(courses)
 
 // Create Home Page Route
