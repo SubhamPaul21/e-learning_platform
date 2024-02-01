@@ -1,12 +1,15 @@
 const express = require('express');
 
 // Import Routes
-const courses = require('./Routes/coursesRoute');
+// const courses = require('./Routes/coursesRoute');
+const category = require("./Routes/categoryRoute");
 
 const app = express();
 
 // Middlewares
-app.use(courses)
+app.use(express.json());
+app.use('/api/category', category);
+// app.use(courses)
 
 // Create Home Page Route
 app.get('/', (req, res) => {
