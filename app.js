@@ -3,6 +3,9 @@ const { displayCourses, displaySingleCourses } = require('./utils/display_course
 
 const app = express();
 
+// Middleware to use JSON for Express Routing
+app.use(express.json());
+
 // Dummy course database for initial testing
 const courses = [
     {
@@ -93,8 +96,6 @@ app.get('/', (req, res) => {
     res.send(welcomeMessage);
 })
 
-// Create Course Route
-
 // Read Courses Route
 app.get('/courses/', (req, res) => {
     res.send(displayCourses(courses));
@@ -116,17 +117,57 @@ app.get('/courses/:name', (req, res) => {
     }
 })
 
-// Update Course Route
+// Create Course Route
+app.post('/courses/', (req, res) => {
+    const newCourse = req.body;
+    const existingCourse = courses.find(course => course.name.toLowerCase() === newCourse.name.toLowerCase());
 
-// Delete Course Route
-
-// Listen on port
-const port = process.env.Port || 3000;
-app.listen(port, () => {
-    console.log(`App starting here: 127.0.0.1:${port}`);
+    if (existingCourse) {
+        res.status(404).send("The course you are trying to add already exists.");
+    } else {
+        const course = {
+            name: newCourse.name,
+            description: newCourse.description,
+            modules: newCourse.modules,
+            creator: newCourse.creator,
+            publishedDate: newCourse.publishedDate,
+            rating: newCourse.rating,
+        }
+        courses.push(course);
+        res.send(course);
+    }
 })
 
-//     courses[0].modules.forEach((module) => {
-//         console.log(module);
-//     return "<li>" + module + "</li>";
-// })}
+// Update Course Route
+app.put('/courses/:name', (req, res) => {
+    const newCourse = req.body;
+    const existingCourse = courses.find(course => course.name.toLowerCase() === req.params.name.toLowerCase());
+
+    if (!existingCourse) {
+        res.status(404).send("The course you are trying to update doesn't exists.");
+    } else {
+        existingCourse.name = newCourse.name;
+        existingCourse.description = newCourse.description;
+        existingCourse.modules = newCourse.modules;
+        existingCourse.creator = newCourse.creator;
+        existingCourse.publishedDate = newCourse.publishedDate;
+        existingCourse.rating = newCourse.rating;
+        res.send(existingCourse);
+    }
+})
+
+// Delete Course Route
+app.delete('/courses/:name', (req, res) => {
+    const existingCourseIndex = courses.findIndex(course => course.name.toLowerCase() === req.params.name.toLowerCase());
+
+    if (existingCourseIndex >= 0) {
+        const deletedCourse = courses.splice(existingCourseIndex, 1);
+        res.send(deletedCourse);
+    } else {
+        res.status(404).send("The course you are trying to delete doesn't exists.");
+    }
+})
+
+// Listen on port
+const port = process.env.PORT || 3000;
+app.listen(port);
