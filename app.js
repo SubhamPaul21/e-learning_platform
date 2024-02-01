@@ -1,5 +1,7 @@
 const express = require('express');
-const courses = require('./Routes/courses');
+
+// Import Routes
+const courses = require('./Routes/coursesRoute');
 
 const app = express();
 
