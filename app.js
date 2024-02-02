@@ -2,8 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 // Import Routes
-const course = require("./Routes/courseRoute");
-const category = require("./Routes/categoryRoute");
+const course = require("./Routes/courseRoute_API");
+const category = require("./Routes/categoryRoute_API");
 
 const app = express();
 
