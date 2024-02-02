@@ -2,15 +2,15 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 // Import Routes
-const course = require("./Routes/courseRoute_API");
-const category = require("./Routes/categoryRoute_API");
+const course_API = require("./Routes/courseRoute_API");
+const category_API = require("./Routes/categoryRoute_API");
 
 const app = express();
 
 // Middlewares
 app.use(express.json());
-app.use('/api/category', category);
-app.use('/api/course', course);
+app.use('/api/category', category_API);
+app.use('/api/course', course_API);
 
 // Connect to E-learning MongoDB
 mongoose.connect('mongodb://127.0.0.1:27017/e_learning')

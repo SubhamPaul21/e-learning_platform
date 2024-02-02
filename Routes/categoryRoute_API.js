@@ -17,8 +17,8 @@ router.post('/', async (req, res) => {
     }
 
     try {
-        await new Category(newCategory).save();
-        return res.send(newCategory);
+        const addedCategory = await new Category(newCategory).save();
+        return res.send(addedCategory);
     } catch (error) {
         return res.status(400).send(error.message);
     }
@@ -35,8 +35,8 @@ router.put('/:id', async (req, res) => {
     }
 
     try {
-        await Category.findByIdAndUpdate(categoryID, newCategory);
-        return res.send(newCategory);
+        const updatedCategory = await Category.findByIdAndUpdate(categoryID, newCategory);
+        return res.send(updatedCategory);
     } catch (error) {
         return res.status(400).send(error.message);
     }
@@ -46,8 +46,8 @@ router.delete('/:id', async (req, res) => {
     const categoryID = req.params.id;
 
     try {
-        await Category.findByIdAndDelete(categoryID);
-        res.send("Category Deleted from Database");
+        const deletedCategory = await Category.findByIdAndDelete(categoryID);
+        res.send(deletedCategory);
     } catch (error) {
         return res.status(400).send(error.message);
     }
