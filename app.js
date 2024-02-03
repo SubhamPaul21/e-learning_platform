@@ -10,6 +10,7 @@ const app = express();
 
 // Middlewares
 app.use(express.json());
+app.use(express.static('./'));
 app.use('/api/category', category_API);
 app.use('/api/course', course_API);
 
@@ -24,24 +25,11 @@ mongoose.connect('mongodb://127.0.0.1:27017/e_learning')
 
 // Create Home Page Route
 app.get('/', (_, res) => {
-    const welcomeMessage = `
-        <div>
-            <h2>Welcome to Subham's E-learning platform Clone project.</h2>
-            <h4>Tech Stacks Used:</h4>
-            <ul>
-                <li>HTML5</li>
-                <li>CSS3</li>
-                <li>Javascript</li>
-                <li>Node.js</li>
-                <li>Express.js</li>
-                <li>MongoDB</li>
-                <li>REST API</li>
-            </ul>
-            <h4>Enter the world of E-learning from the link below --></h4>
-            <a href="/courses">Courses</a>
-        </div>
-    `
-    res.send(welcomeMessage);
+    res.sendFile('public/views/index.html', { root: './' }, function (err) {
+        if (err) {
+            console.log("Error in Index.html file:", err);
+        }
+    });
 })
 
 

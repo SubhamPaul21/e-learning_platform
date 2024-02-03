@@ -2,7 +2,7 @@
   "name": "e-learning_platform",
   "version": "1.0.0",
   "description": "This is a basic practice project of any e-learning platform providing courses.",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
