@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const course_API = require("./Routes/courseRoute_API");
 const category_API = require("./Routes/categoryRoute_API");
 
+
 const app = express();
 
 // Middlewares
@@ -16,12 +17,13 @@ app.use('/api/course', course_API);
 mongoose.connect('mongodb://127.0.0.1:27017/e_learning')
     .then(() => {
         console.log("Succesfully connected to E-learning Database");
-    }).catch((err) => {
+    })
+    .catch((err) => {
         console.log("Error connecting to E-learning Database with error message:", err);
     })
 
 // Create Home Page Route
-app.get('/', (req, res) => {
+app.get('/', (_, res) => {
     const welcomeMessage = `
         <div>
             <h2>Welcome to Subham's E-learning platform Clone project.</h2>
