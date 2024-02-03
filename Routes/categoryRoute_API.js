@@ -13,14 +13,14 @@ router.post('/', async (req, res) => {
     const { error } = validate(newCategory);
 
     if (error) {
-        return res.status(400).send(error.details[0].message);
+        return res.status(404).send(error.details[0].message);
     }
 
     try {
         const addedCategory = await new Category(newCategory).save();
         return res.send(addedCategory);
     } catch (error) {
-        return res.status(400).send(error.message);
+        return res.status(404).send(error.message);
     }
 })
 
@@ -31,14 +31,14 @@ router.put('/:id', async (req, res) => {
     const { error } = validate(newCategory);
 
     if (error) {
-        return res.status(400).send(error.details[0].message);
+        return res.status(404).send(error.details[0].message);
     }
 
     try {
         const updatedCategory = await Category.findByIdAndUpdate(categoryID, newCategory);
         return res.send(updatedCategory);
     } catch (error) {
-        return res.status(400).send(error.message);
+        return res.status(404).send(error.message);
     }
 })
 
@@ -49,7 +49,7 @@ router.delete('/:id', async (req, res) => {
         const deletedCategory = await Category.findByIdAndDelete(categoryID);
         res.send(deletedCategory);
     } catch (error) {
-        return res.status(400).send(error.message);
+        return res.status(404).send(error.message);
     }
 })
 
